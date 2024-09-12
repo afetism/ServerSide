@@ -42,17 +42,7 @@ class MainViewModel : INotifyPropertyChanged
         Send = new(executeSend);
     }
 
-    static void SendMethod(NetworkStream netstr, byte[] message)
-    {
-        try
-        {
-            netstr.Write(message, 0, message.Length);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Error!\n" + ex.Message + "\n" + ex.StackTrace);
-        }
-    }
+   
 
     private void executeSend(object obj)
     {
@@ -68,12 +58,19 @@ class MainViewModel : INotifyPropertyChanged
                 {
                     using (var source = new FileStream(Image, FileMode.Open, FileAccess.Read))
                     {
-                        byte[] buffer = new byte[1024]; 
-                        int bytesRead;
-                        while ((bytesRead = source.Read(buffer, 0, buffer.Length)) > 0)
+                        int len = 10000;
+                        var bytes= new byte[len];
+                        var fileSize= source.Length;
+                        do
                         {
-                            SendMethod(stream, buffer.Take(bytesRead).ToArray()); 
+                            len=source.Read(bytes, 0, len);
+                            stream.Write(bytes, 0, len);
+                      
+                         
+
                         }
+                        while (len > 0);
+                        
                     }
                 }
             }

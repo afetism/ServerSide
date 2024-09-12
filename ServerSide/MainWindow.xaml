@@ -7,6 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="300">
     <Grid>
-        <Image Height="200" Width="200" Source="{Binding ImageSource}"></Image>
+        <Image Height="200" Width="200" Source="{Binding ImageOpenClose}"></Image>
     </Grid>
 </Window>
